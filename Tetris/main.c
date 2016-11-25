@@ -8,27 +8,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<windows.h>
+#define XSIZE 3
+#define YSIZE 3
 
-void* Thread1();
+void* PrintThread();
 void* PlayBackgroundMusic();
+
+int rgMain[XSIZE][YSIZE] = {0, 0, 0, 0, 1, 0, 1, 0, 1};
+
+int rgCollide[XSIZE][YSIZE] = {0};
 
 int main(int argc, char** argv) {
     
     pthread_t thread1, music;
     
-    pthread_create( &thread1, NULL, Thread1, NULL);
+    pthread_create( &thread1, NULL, PrintThread, NULL);
     pthread_create( &music, NULL, PlayBackgroundMusic, NULL);
+    
+    printf("\e[?25l");
     
     while(1);
 
     return (EXIT_SUCCESS);
 }
 
-void* Thread1(){
+void* PrintThread(){
+    
+    int x, y;
+    
     while(1){
+        
+        printf("\033[%d;%dH", 0, 0);
+
+        for (x = 0; x < XSIZE; x++) {
+            for (y = 0; y < YSIZE; y++) {
+                if (rgMain[x][y])printf("#");
+                else printf(" ");
+            }
+            printf("\n");
+        }
         
     }
 }
+
 void* PlayBackgroundMusic(){
     
     int takt=220; //takt in ms = 1/8 Ton
