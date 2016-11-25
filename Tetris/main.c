@@ -7,10 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include<windows.h>
 
-/*
- * 
- */
 void* Thread1();
 void* PlayBackgroundMusic();
 
@@ -33,63 +31,73 @@ void* Thread1(){
 }
 void* PlayBackgroundMusic(){
     
-        const int C    = 261;
-        const int Cis  = 277;
-        const int D    = 293;
-        const int Dis  = 311;
-        const int E    = 329;
-        const int F    = 349;
-        const int Fis  = 369;
-        const int G    = 391;
-        const int Gis  = 415;
-        const int A    = 440;
-        const int Ais  = 466;
-        const int H    = 493;
-        const int Takt = 1700;
+    int takt=220; //takt in ms = 1/8 Ton
+    float c2=523.251; //c''
+    float d2=587.330; //d''
+    float e2=622.254; //e'' um Halbton niedriger
+    float f2=698.456; //f''
+    float g2=783.991; //g''
+    float a2=830.609; //a'' um Halbton niedriger
+    float h2=932.328; //h'' um Halbton niedriger
+    float c3=1046.50; //c'''
     
     while(1){
         
-        Beep(E * 2, Takt / 4);
-        Beep(H * 1, Takt / 8);
-        Beep(C * 2, Takt / 8);
-        Beep(D * 2, Takt / 4);
-        Beep(C * 2, Takt / 8);
-        Beep(H * 1, Takt / 8);
-        Beep(A * 1, Takt / 4);
-        Beep(A * 1, Takt / 8);
-        Beep(C * 2, Takt / 8);
-        Beep(E * 2, Takt / 8);
-        Beep(E * 2, Takt / 8);
-        Beep(D * 2, Takt / 8);
-        Beep(C * 2, Takt / 8);
-        Beep(H * 1, Takt / 2.5);
-        Beep(C * 2, Takt / 8);
-        Beep(D * 2, Takt / 4);
-        Beep(E * 2, Takt / 4);
-        Beep(C * 2, Takt / 4);
-        Beep(A * 1, Takt / 4);
-        Beep(A * 1, Takt / 4);
-        Sleep(Takt / (8 / 3));
-        Beep(D * 2, Takt / 3.25);
-        Beep(F * 2, Takt / 8);
-        Beep(A * 2, Takt / 8);
-        Beep(A * 2, Takt / 8);
-        Beep(G * 2, Takt / 8);
-        Beep(F * 2, Takt / 8);
-        Beep(E * 2, Takt / 3);
-        Beep(C * 2, Takt / 8);
-        Beep(E * 2, Takt / 8);
-        Beep(E * 2, Takt / 8);
-        Beep(D * 2, Takt / 8);
-        Beep(C * 2, Takt / 8);
-        Beep(H * 1, Takt / 4);
-        Beep(H * 1, Takt / 8);
-        Beep(C * 2, Takt / 8);
-        Beep(D * 2, Takt / 4);
-        Beep(E * 2, Takt / 4);
-        Beep(C * 2, Takt / 4);
-        Beep(A * 1, Takt / 4);
-        Beep(A * 1, Takt / 4);
+    Beep(g2,takt*2); //g'' 1. Zeile
+    Beep(d2,takt*1); //d''
+    Beep(e2,takt*1); //e''
+
+    Beep(f2,takt*2); //f''
+    Beep(e2,takt*1); //e''
+    Beep(d2,takt*1); //d''
+
+    Beep(c2,takt*2); //c''
+    Beep(c2,takt*1); //c''
+    Beep(e2,takt*1); //e''
+
+    Beep(g2,takt*2); //g''
+    Beep(f2,takt*1); //f''
+    Beep(e2,takt*1); //e''
+
+    Beep(d2,takt*3); //d'' (2 Toene)
+    Beep(e2,takt*1); //e''
+
+    Beep(f2,takt*2); //f''
+    Beep(g2,takt*2); //g''
+
+    Beep(e2,takt*2); //e''
+    Beep(c2,takt*2); //c''
+
+    Beep(c2,takt*2); //c''
+    Sleep(takt*2); //Pause
+
+    Sleep(takt*1); //Pause 2. Zeile
+    Beep(f2,takt*2); //f'' (2 Toene)
+    Beep(a2,takt*1); //a''
+
+    Beep(c3,takt*2); //c'''
+    Beep(h2,takt*1); //h''
+    Beep(a2,takt*1); //a''
+
+    Beep(g2,takt*3); //g'' (2 Toene)
+    Beep(e2,takt*1); //e''
+
+    Beep(g2,takt*2); //g''
+    Beep(f2,takt*1); //f''
+    Beep(e2,takt*1); //e''
+
+    Beep(d2,takt*2); //d''
+    Beep(d2,takt*1); //d''
+    Beep(e2,takt*1); //e''
+
+    Beep(f2,takt*2); //f''
+    Beep(g2,takt*2); //g''
+
+    Beep(e2,takt*2); //e''
+    Beep(c2,takt*2); //c''
+
+    Beep(c2,takt*2); //c''
+    Sleep(takt*2); //Pause
         
     }
 }
