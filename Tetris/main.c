@@ -12,17 +12,23 @@
 #define YSIZE 5
 #define XSIZEFORM 3
 #define YSIZEFORM 3
+#define FORMCOUNT 1
 
 void* PrintThread();
 void* PlayBackgroundMusic();
-void  SpawnForm();
+void  SpawnForm(int xpos,int ypos, int form);
+void  ClearForm(int xpos,int ypos, int form);
+int   Sum();
 
-int rgForm1[XSIZEFORM][YSIZEFORM]={ 1,1,1,
-                                    0,1,0};
+int rgForm[XSIZEFORM][YSIZEFORM]={ 2, 2, 2,
+                                  -1, 2,-1,
+                                   0,-1, 0};
 
-int rgMain[XSIZE][YSIZE] = {0};
-
-int rgCollide[XSIZE][YSIZE] = {0};
+int rgMain[XSIZE][YSIZE] = {0,0,0,0,0,
+                            0,0,0,0,0,
+                            0,0,0,0,0,
+                            0,0,0,2,0,
+                            0,0,0,0,0};
 
 int main(int argc, char** argv) {
     
@@ -33,9 +39,23 @@ int main(int argc, char** argv) {
     
     printf("\e[?25l");
     
-    SpawnForm();
+    int x=0, y=1, sum, sum1, i=1;
     
-    while(1);
+    SpawnForm(x, y, 1);
+    sum = Sum();
+    sum1 = Sum();
+    while(1){
+        sleep(1);
+        sum = Sum();
+        if(sum != sum1){
+            i=0;
+        }
+        ClearForm(x, y, 1);
+        if(i){
+            x++;
+        }
+        SpawnForm(x, y, 1);
+    }
 
     return (EXIT_SUCCESS);
 }
@@ -50,27 +70,61 @@ void* PrintThread(){
 
         for (x = 0; x < XSIZE; x++) {
             for (y = 0; y < YSIZE; y++) {
-                if (rgMain[x][y])printf("#");
+                if(rgMain[x][y]>0)printf("#", rgMain[x][y]);
                 else printf(" ");
             }
             printf("\n");
         }
         
+        for (x = 0; x < XSIZE; x++) {
+            printf("-");
+        }
+        printf("\n");
+        
+        for (x = 0; x < XSIZE; x++) {
+            for (y = 0; y < YSIZE; y++) {
+                if(rgMain[x][y]>=0)
+                    printf( " %d", rgMain[x][y]);
+                if(rgMain[x][y]<0)
+                    printf( "%d", rgMain[x][y]);
+            }
+            printf("  \n");
+        }
     }
 }
 
-void  SpawnForm(){
+void  SpawnForm(int xpos,int ypos, int form){
     
-    int x,y;
-    
+    int x, y;
     for(x = 0; x < XSIZEFORM; x++){
         for(y = 0; y < YSIZEFORM; y++){
             
-            rgMain[x + 1][y + 1] = rgForm1[x][y];
-            
+            rgMain[x + xpos][y + ypos] = rgMain[x + xpos][y + ypos] + rgForm[x][y];
+
         }       
-    }    
-    
+    }
+}
+
+void  ClearForm(int xpos,int ypos, int form){
+    int x, y;
+    for(x = 0; x < XSIZEFORM; x++){
+        for(y = 0; y < YSIZEFORM; y++){
+                rgMain[x + xpos][y + ypos] = rgMain[x + xpos][y + ypos] - rgForm[x][y];
+        }       
+    }
+}
+
+int   Sum(){
+    int x, y, sum = 0;
+    for(x = 0; x < XSIZE; x++){
+        for(y = 0; y < YSIZE; y++){
+            if(rgMain[x][y]>0)
+                sum = sum + rgMain[x][y];
+            if(rgMain[x][y]<0)
+                sum = sum - rgMain[x][y];
+        }
+    }
+    return sum;
 }
 
 void* PlayBackgroundMusic(){
