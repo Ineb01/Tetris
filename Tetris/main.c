@@ -8,13 +8,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<windows.h>
-#define XSIZE 3
-#define YSIZE 3
+#define XSIZE 5
+#define YSIZE 5
 
 void* PrintThread();
 void* PlayBackgroundMusic();
+void  SpawnForm();
 
-int rgMain[XSIZE][YSIZE] = {0, 0, 0, 0, 1, 0, 1, 0, 1};
+int rgForm1[3][2]={1,1,1,
+                   0,1,0};
+
+int rgMain[XSIZE][YSIZE] = {0};
 
 int rgCollide[XSIZE][YSIZE] = {0};
 
@@ -26,6 +30,8 @@ int main(int argc, char** argv) {
     pthread_create( &music, NULL, PlayBackgroundMusic, NULL);
     
     printf("\e[?25l");
+    
+    SpawnForm();
     
     while(1);
 
@@ -49,6 +55,20 @@ void* PrintThread(){
         }
         
     }
+}
+
+void  SpawnForm(){
+    
+    int x,y;
+    
+    for(x = 0; x < XSIZE; x++){
+        for(y = 0; y < YSIZE; y++){
+            
+            rgMain[XSIZE + 1][YSIZE + 1] = rgForm1[XSIZE][YSIZE];
+            
+        }       
+    }    
+    
 }
 
 void* PlayBackgroundMusic(){
