@@ -10,13 +10,15 @@
 #include<windows.h>
 #define XSIZE 5
 #define YSIZE 5
+#define XSIZEFORM 3
+#define YSIZEFORM 3
 
 void* PrintThread();
 void* PlayBackgroundMusic();
 void  SpawnForm();
 
-int rgForm1[3][2]={1,1,1,
-                   0,1,0};
+int rgForm1[XSIZEFORM][YSIZEFORM]={ 1,1,1,
+                                    0,1,0};
 
 int rgMain[XSIZE][YSIZE] = {0};
 
@@ -61,10 +63,10 @@ void  SpawnForm(){
     
     int x,y;
     
-    for(x = 0; x < XSIZE; x++){
-        for(y = 0; y < YSIZE; y++){
+    for(x = 0; x < XSIZEFORM; x++){
+        for(y = 0; y < YSIZEFORM; y++){
             
-            rgMain[XSIZE + 1][YSIZE + 1] = rgForm1[XSIZE][YSIZE];
+            rgMain[x + 1][y + 1] = rgForm1[x][y];
             
         }       
     }    
